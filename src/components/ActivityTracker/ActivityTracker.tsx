@@ -83,7 +83,7 @@ const ActivityTracker: React.FC = () => {
     if (deadlineDate < now) return 'overdue';
     
     const hoursUntilDeadline = (deadlineDate.getTime() - now.getTime()) / (1000 * 60 * 60);
-    if (hoursUntilDeadline <= 24) return 'in_progress';
+    if (hoursUntilDeadline >= 24) return 'in_progress';
     
     return 'pending';
   };
@@ -140,15 +140,21 @@ const ActivityTracker: React.FC = () => {
     
     try {
       // Send notification to each assigned user
+
       for (const user of assignedUsers) {
+        const rawId = activity.id
+        const cleanId = rawId.replace(/^post-/, '')
+        console.log(activity.id)
+        console.log(rawId)
+        console.log(cleanId)
         await addNotification({
           userId: user.id,
           title: 'Lembrete de Atividade',
           message: message,
           type: 'Task',
           read: false,
-          actionUrl: `#activity-${activity.id}`,
-          relatedId: activity.id,
+          actionUrl: `#activity-${cleanId}`, 
+          relatedId: cleanId,
           createdAt: new Date().toISOString()
         });
       }
