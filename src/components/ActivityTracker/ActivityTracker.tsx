@@ -91,11 +91,11 @@ const ActivityTracker: React.FC = () => {
 
   const handleCompleteActivity = async (activityId: string) => {
     try {
-      // Remove prefixo "event-" caso exista
+      // Remove "event-"
       const cleanId = activityId.replace(/^event-/, "");
   
       const { error } = await supabase
-        .from("events") // ou o nome da sua tabela
+        .from("events") 
         .update({ status: "Completed" })
         .eq("id", cleanId);
   
