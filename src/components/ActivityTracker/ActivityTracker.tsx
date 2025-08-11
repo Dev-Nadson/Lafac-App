@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, Target, AlertTriangle, CheckCircle, Send, Users, Calendar, Check } from 'lucide-react';
+import { Clock, Target, AlertTriangle, CheckCircle, Send, Users, Calendar } from 'lucide-react';
 import { useData } from '../../context/DataContext';
 import toast from 'react-hot-toast';
+import { supabase } from '../../lib/supabase.ts'
 
 interface Activity {
   id: string;
@@ -87,6 +88,31 @@ const ActivityTracker: React.FC = () => {
     
     return 'pending';
   };
+
+  const handleCompleteActivity = async (activityId: string) => {
+    try {
+      // Remove prefixo "event-" caso exista
+      const cleanId = activityId.replace(/^event-/, "");
+  
+      const { error } = await supabase
+        .from("events") // ou o nome da sua tabela
+        .update({ status: "Completed" })
+        .eq("id", cleanId);
+  
+      if (error) {
+        console.error("Error completing activity:", error);
+        return;
+      }
+      
+      setActivities((prevActivities) =>
+        prevActivities.map((act) =>
+          act.id === activityId ? { ...act, status: "completed" } : act
+        )
+      );
+    } catch (err) {
+      console.error("Unexpected error:", err);
+    }
+  };  
 
   const getPriorityFromDeadline = (deadline: string): Activity['priority'] => {
     const now = new Date();
@@ -183,7 +209,7 @@ const ActivityTracker: React.FC = () => {
     const overdueActivities = activities.filter(a => a.status === 'overdue' || a.status === 'in_progress');
     
     if (overdueActivities.length === 0) {
-      toast.info('Não há atividades urgentes para lembrar');
+      toast('Não há atividades urgentes para lembrar');
       return;
     }
 
@@ -353,29 +379,15 @@ const ActivityTracker: React.FC = () => {
                       </div>
                     )}
                   </div>
-                  
-                  {/* <div className="flex items-center space-x-2">
-                    {activity.status !== 'completed' && (
-                      <button
-                        onClick={() => {
-                          setSelectedActivity(activity);
-                          setShowReminderModal(true);
-                        }}
-                        className="flex items-center space-x-1 bg-blue-50 text-blue-700 px-3 py-2 rounded-lg hover:bg-blue-100 transition-colors"
-                      >
-                        <Send className="w-4 h-4" />
-                        <span>Lembrar</span>
-                      </button>
-                    )}
-                  </div> */}
+
                   <div className="flex items-center space-x-2">
                     {activity.status !== 'completed' && (
                       <>
                         <button
-                          // onClick={() => handleCompleteActivity(activity.id)}
+                          onClick={() => handleCompleteActivity(activity.id)}
                           className="flex items-center space-x-1 bg-green-50 text-green-700 px-3 py-2 rounded-lg hover:bg-green-100 transition-colors"
                         >
-                          <Check className="w-4 h-4" />
+                          <CheckCircle className="w-4 h-4" />
                           <span>Concluir</span>
                         </button>
 
