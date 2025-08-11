@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, Target, AlertTriangle, CheckCircle, Send, Users, Calendar } from 'lucide-react';
+import { Clock, Target, AlertTriangle, CheckCircle, Send, Users, Calendar, Check } from 'lucide-react';
 import { useData } from '../../context/DataContext';
 import toast from 'react-hot-toast';
 
@@ -354,7 +354,7 @@ const ActivityTracker: React.FC = () => {
                     )}
                   </div>
                   
-                  <div className="flex items-center space-x-2">
+                  {/* <div className="flex items-center space-x-2">
                     {activity.status !== 'completed' && (
                       <button
                         onClick={() => {
@@ -367,7 +367,32 @@ const ActivityTracker: React.FC = () => {
                         <span>Lembrar</span>
                       </button>
                     )}
+                  </div> */}
+                  <div className="flex items-center space-x-2">
+                    {activity.status !== 'completed' && (
+                      <>
+                        <button
+                          // onClick={() => handleCompleteActivity(activity.id)}
+                          className="flex items-center space-x-1 bg-green-50 text-green-700 px-3 py-2 rounded-lg hover:bg-green-100 transition-colors"
+                        >
+                          <Check className="w-4 h-4" />
+                          <span>Concluir</span>
+                        </button>
+
+                        <button
+                          onClick={() => {
+                            setSelectedActivity(activity);
+                            setShowReminderModal(true);
+                          }}
+                          className="flex items-center space-x-1 bg-blue-50 text-blue-700 px-3 py-2 rounded-lg hover:bg-blue-100 transition-colors"
+                        >
+                          <Send className="w-4 h-4" />
+                          <span>Lembrar</span>
+                        </button>
+                      </>
+                    )}
                   </div>
+
                 </div>
               </div>
             );
