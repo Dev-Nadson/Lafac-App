@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, Target, AlertTriangle, CheckCircle, Send, Users, Calendar } from 'lucide-react';
+import { Clock, Target, AlertTriangle, CheckCircle, Send, Users, Calendar, ArchiveRestore } from 'lucide-react';
 import { useData } from '../../context/DataContext';
 import toast from 'react-hot-toast';
 import { supabase } from '../../lib/supabase.ts'
@@ -113,6 +113,33 @@ const ActivityTracker: React.FC = () => {
       console.error("Unexpected error:", err);
     }
   };  
+
+  const handleReOpenActivity = async (activityId: string) => {
+    try {
+      // CORREÇÃO: Remove qualquer prefixo da string, extraindo apenas o UUID.
+      const cleanId = activityId.substring(activityId.indexOf('-') + 1);
+  
+      const { error } = await supabase
+        .from("events")
+        .update({ status: "Scheduled" }) // Atualiza para "Scheduled" no DB
+        .eq("id", cleanId);
+  
+      if (error) {
+        console.error("Error updating activity:", error);
+        return;
+      }
+      
+      // ATENÇÃO: Atualize o estado local para refletir a mudança feita no DB.
+      setActivities((prevActivities) =>
+        prevActivities.map((act) =>
+          act.id === activityId ? { ...act, status: "pending" } : act // Mudar para "Scheduled" aqui também
+        )
+      );
+  
+    } catch (err) {
+      console.error("Unexpected error:", err);
+    }
+  };
 
   const getPriorityFromDeadline = (deadline: string): Activity['priority'] => {
     const now = new Date();
@@ -400,6 +427,20 @@ const ActivityTracker: React.FC = () => {
                         >
                           <Send className="w-4 h-4" />
                           <span>Lembrar</span>
+                        </button>
+                      </>
+                    )}
+                  </div>
+
+                  <div className="flex items-center space-x-2">
+                    {activity.status === 'completed' && (
+                      <>
+                        <button
+                          onClick={() => handleReOpenActivity(activity.id)}
+                          className="flex items-center space-x-1 bg-red-50 text-red-700 px-3 py-2 rounded-lg hover:bg-red-100 transition-colors"
+                          >
+                          <ArchiveRestore className="w-4 h-4" />
+                          <span>Reabrir</span>
                         </button>
                       </>
                     )}
