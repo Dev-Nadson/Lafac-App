@@ -121,7 +121,7 @@ const ActivityTracker: React.FC = () => {
   
       const { error } = await supabase
         .from("events")
-        .update({ status: "Scheduled" }) // Atualiza para "Scheduled" no DB
+        .update({ status: "Scheduled" }) 
         .eq("id", cleanId);
   
       if (error) {
@@ -129,10 +129,9 @@ const ActivityTracker: React.FC = () => {
         return;
       }
       
-      // ATENÇÃO: Atualize o estado local para refletir a mudança feita no DB.
       setActivities((prevActivities) =>
         prevActivities.map((act) =>
-          act.id === activityId ? { ...act, status: "pending" } : act // Mudar para "Scheduled" aqui também
+          act.id === activityId ? { ...act, status: "pending" } : act 
         )
       );
   
