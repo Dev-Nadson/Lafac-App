@@ -116,7 +116,6 @@ const ActivityTracker: React.FC = () => {
 
   const handleReOpenActivity = async (activityId: string) => {
     try {
-      // CORREÇÃO: Remove qualquer prefixo da string, extraindo apenas o UUID.
       const cleanId = activityId.substring(activityId.indexOf('-') + 1);
   
       const { error } = await supabase
