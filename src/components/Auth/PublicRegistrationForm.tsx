@@ -71,8 +71,8 @@ export const PublicRegistrationForm: React.FC<PublicRegistrationFormProps> = ({ 
     if (step === 3) {
       if (!formData.motivationLetter.trim()) {
         newErrors.motivationLetter = 'Carta de motivação é obrigatória';
-      } else if (formData.motivationLetter.length < 100) {
-        newErrors.motivationLetter = 'Carta de motivação deve ter pelo menos 100 caracteres';
+      } else if (formData.motivationLetter.length < 1000) {
+        newErrors.motivationLetter = 'Carta de motivação deve ter pelo menos 1000 caracteres';
       }
     }
 
@@ -335,10 +335,10 @@ export const PublicRegistrationForm: React.FC<PublicRegistrationFormProps> = ({ 
                 {errors.motivationLetter ? (
                   <p className="text-sm text-red-600">{errors.motivationLetter}</p>
                 ) : (
-                  <p className="text-sm text-gray-500">Mínimo de 100 caracteres</p>
+                  <p className="text-sm text-gray-500">Mínimo de 1000 caracteres</p>
                 )}
                 <p className="text-sm text-gray-500">
-                  {formData.motivationLetter.length}/100
+                  {formData.motivationLetter.length}/1000
                 </p>
               </div>
             </div>
