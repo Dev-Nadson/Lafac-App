@@ -6,7 +6,7 @@ import { Loader2 } from 'lucide-react';
 interface ProtectedRouteProps {
   children: React.ReactNode;
   requiredPermissions?: string[];
-  requiredRole?: string;
+  requiredRole?: string | string[];
   allowInterviewers?: boolean;
 }
 

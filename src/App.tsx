@@ -49,7 +49,7 @@ function App() {
         );
       case 'selectionProcess':
         return (
-          <ProtectedRoute requiredRole="President">
+            <ProtectedRoute requiredRole={['President', 'InterviewerMember']}>
             <SelectionProcessTab />
           </ProtectedRoute>
         );
