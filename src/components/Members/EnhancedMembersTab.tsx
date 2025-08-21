@@ -166,6 +166,7 @@ const EnhancedMembersTab: React.FC = () => {
               <option value="Director of Communications">Diretor de Comunicações</option>
               <option value="Scientific Director">Diretor Científico</option>
               <option value="Member">Membro</option>
+              <option value="InterviwerMember">Entrevistador</option>
             </select>
           </div>
 
