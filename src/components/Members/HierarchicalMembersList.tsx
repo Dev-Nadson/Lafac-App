@@ -23,7 +23,8 @@ const HierarchicalMembersList: React.FC<HierarchicalMembersListProps> = ({
       'Director of Communications': MessageSquare,
       'Scientific Director': BookOpen,
       'Treasurer': DollarSign,
-      'Member': User
+      'Member': User,
+      'InterviwerMember': User
     };
     return icons[role as keyof typeof icons] || User;
   };

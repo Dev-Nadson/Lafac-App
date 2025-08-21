@@ -208,6 +208,7 @@ const MembersTab: React.FC = () => {
               <option value="Scientific Director">Diretor Científico</option>
               <option value="Treasurer">Tesoureiro</option>
               <option value="Member">Membro</option>
+              <option value="InterviwerMember">Entrevistador</option>
             </select>
           </div>
 

@@ -56,7 +56,7 @@ const SelectionProcessTab: React.FC = () => {
   const [hasAccess, setHasAccess] = useState(false);
 
   // Check if user can manage selection process
-  const canManageProcess = user?.role === 'President' || user?.role === 'Vice-President' || user?.role === 'Superadmin';
+  const canManageProcess = user?.role === 'President' || user?.role === 'Vice-President' || user?.role === 'Superadmin' || user?.role === 'InterviwerMember';
   const canInterview = hasInterviewerPermission || canManageProcess;
 
   // Load selection process status and registrations

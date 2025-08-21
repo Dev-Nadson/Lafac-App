@@ -26,7 +26,7 @@
 -- Adicionar novo perfil Superadmin e Tesoureiro
 ALTER TABLE users DROP CONSTRAINT IF EXISTS users_role_check;
 ALTER TABLE users ADD CONSTRAINT users_role_check 
-CHECK (role IN ('Superadmin', 'President', 'Vice-President', 'Director of Events', 'Director of Communications', 'Scientific Director', 'Treasurer', 'Member'));
+CHECK (role IN ('Superadmin', 'President', 'Vice-President', 'Director of Events', 'Director of Communications', 'Scientific Director', 'Treasurer', 'Member', 'InterviwerMember'));
 
 -- Adicionar campos extras aos usuários
 ALTER TABLE users ADD COLUMN IF NOT EXISTS birth_date date;
@@ -278,7 +278,7 @@ CREATE POLICY "Directors can manage assignments"
     EXISTS (
       SELECT 1 FROM users u 
       WHERE u.id = auth.uid() 
-      AND u.role IN ('Superadmin', 'President', 'Vice-President', 'Director of Events', 'Director of Communications', 'Scientific Director')
+      AND u.role IN ('Superadmin', 'President', 'Vice-President', 'Director of Events', 'Director of Communications', 'Scientific Director', 'InterviwerMember')
       AND u.is_active = true
     )
   );
@@ -298,7 +298,7 @@ CREATE POLICY "Directors can read all workloads"
     EXISTS (
       SELECT 1 FROM users u 
       WHERE u.id = auth.uid() 
-      AND u.role IN ('Superadmin', 'President', 'Vice-President', 'Director of Events', 'Director of Communications', 'Scientific Director')
+      AND u.role IN ('Superadmin', 'President', 'Vice-President', 'Director of Events', 'Director of Communications', 'Scientific Director', 'InterviwerMember')
       AND u.is_active = true
     )
   );

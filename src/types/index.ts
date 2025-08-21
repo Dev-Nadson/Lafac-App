@@ -25,7 +25,8 @@ export type UserRole =
   | 'Director of Communications' 
   | 'Scientific Director' 
   | 'Treasurer' 
-  | 'Member';
+  | 'Member'
+  | 'InterviwerMember';
 
 export interface ParticipationRecord {
   type: 'Event' | 'Post' | 'Interview' | 'Study Group';
