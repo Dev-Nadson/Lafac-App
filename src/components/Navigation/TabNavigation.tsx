@@ -19,7 +19,7 @@ const TabNavigation: React.FC<TabNavigationProps> = ({ activeTab, onTabChange })
     { id: 'posts' as TabType, name: 'Postagens', icon: MessageSquare, permission: 'posts:read' },
     { id: 'studyGroups' as TabType, name: 'Grupos de Estudo', icon: BookOpen, permission: 'study_groups:read' },
     { id: 'events' as TabType, name: 'Eventos', icon: CalendarDays, permission: 'events:read' },
-    { id: 'selectionProcess' as TabType, name: 'Processo Seletivo', icon: UserCheck, requiredRole: 'President', allowInterviewers: true },
+    { id: 'selectionProcess' as TabType, name: 'Processo Seletivo', icon: UserCheck, requiredRole: 'President' || 'InterviewerMember', allowInterviewers: true },
     { id: 'profile' as TabType, name: 'Perfil', icon: User, permission: null }
   ];
 

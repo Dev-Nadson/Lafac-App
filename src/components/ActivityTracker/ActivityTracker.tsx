@@ -383,26 +383,30 @@ const ActivityTracker: React.FC = () => {
                     </div>
                     
                     {assignedUsers.length > 0 && (
-                      <div className="mt-3 flex items-center space-x-2">
-                        <span className="text-sm text-gray-600">Atribuído para:</span>
-                        <div className="flex -space-x-2">
-                          {assignedUsers.slice(0, 3).map(user => (
-                            <div
-                              key={user.id}
-                              className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-medium border-2 border-white"
-                              title={user.name}
-                            >
-                              {user.name.charAt(0)}
-                            </div>
-                          ))}
-                          {assignedUsers.length > 3 && (
-                            <div className="w-8 h-8 bg-gray-500 rounded-full flex items-center justify-center text-white text-xs font-medium border-2 border-white">
-                              +{assignedUsers.length - 3}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    )}
+  <div className="mt-3 flex items-center space-x-2">
+    <span className="text-sm text-gray-600">Atribuído para: </span>
+    <div className="flex items-center space-x-3">
+      {assignedUsers.slice(0, 3).map(user => (
+        <div key={user.id} className="flex items-center space-x-1">
+          <div
+            className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-medium border-2 border-white"
+            title={user.name}
+          >
+            {user.name.charAt(0)}
+          </div>
+          <span className="text-sm text-gray-800">{user.name}</span>
+        </div>
+      ))}
+
+      {assignedUsers.length > 3 && (
+        <div className="w-8 h-8 bg-gray-500 rounded-full flex items-center justify-center text-white text-xs font-medium border-2 border-white">
+          +{assignedUsers.length - 3}
+        </div>
+      )}
+    </div>
+  </div>
+)}
+
                   </div>
 
                   <div className="flex items-center space-x-2">

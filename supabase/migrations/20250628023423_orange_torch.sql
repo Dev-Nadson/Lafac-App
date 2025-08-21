@@ -289,7 +289,7 @@ CREATE POLICY "Directors can read all task completions"
     EXISTS (
       SELECT 1 FROM users u 
       WHERE u.id = auth.uid() 
-      AND u.role IN ('President', 'Vice-President', 'Director of Events', 'Director of Communications', 'Scientific Director')
+      AND u.role IN ('President', 'Vice-President', 'Director of Events', 'Director of Communications', 'Scientific Director', 'InterviewerMember')
       AND u.is_active = true
     )
   );
