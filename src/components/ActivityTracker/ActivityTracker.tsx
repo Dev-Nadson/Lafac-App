@@ -44,7 +44,7 @@ const ActivityTracker: React.FC = () => {
       })),
       // Events
       ...events.map(event => ({
-        id: `event-${event.id}`,
+        id: `${event.id}`,
         type: 'event' as const,
         title: event.title,
         assignedTo: event.assignedMembers,
@@ -89,30 +89,45 @@ const ActivityTracker: React.FC = () => {
     return 'pending';
   };
 
+  function removePrefix(id: string): string {
+    const parts = id.split("-");
+    return parts.slice(1).join("-");
+  }  
+
   const handleCompleteActivity = async (activityId: string) => {
     try {
-      // Remove "event-"
-      const cleanId = activityId.replace(/^event-/, "");
+      const cleanId = removePrefix(activityId);
   
+      // Decide o status baseado no prefixo
+      const isPost = activityId.startsWith("post-");
+      const newStatus = isPost ? "Done" : "Completed";
+      const whereFrom = isPost ? "posts" : "events";
+  
+      const mappedStatus = newStatus === "Done" ? "completed" : "completed";
+
       const { error } = await supabase
-        .from("events") 
-        .update({ status: "Completed" })
+        .from(whereFrom)
+        .update({ status: newStatus })
         .eq("id", cleanId);
   
       if (error) {
         console.error("Error completing activity:", error);
         return;
       }
-      
+  
       setActivities((prevActivities) =>
-        prevActivities.map((act) =>
-          act.id === activityId ? { ...act, status: "completed" } : act
-        )
-      );
+      prevActivities.map((act) =>
+        act.id === activityId ? { ...act, status: mappedStatus } : act
+      )
+    );
+
+    console.log("DEBUG", { activityId, cleanId, whereFrom, newStatus });
+  
+      console.log(`Atividade marcada como ${newStatus}`);
     } catch (err) {
       console.error("Unexpected error:", err);
     }
-  };  
+  }; 
 
   const handleReOpenActivity = async (activityId: string) => {
     try {
