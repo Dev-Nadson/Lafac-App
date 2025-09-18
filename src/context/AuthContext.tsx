@@ -397,7 +397,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     if (resource === 'candidates' && action === 'interview') {
       // This will be checked against the database in the component
       // For now, return true for roles that could potentially be interviewers
-      return ['President', 'Vice-President', 'Superadmin', 'Director of Events', 'Director of Communications', 'Scientific Director', 'Treasurer', 'Member'].includes(user.role);
+      return ['President', 'Vice-President', 'Superadmin', 'Director of Events', 'Director of Communications', 'Scientific Director', 'Treasurer', 'Member', 'InterviwerMember'].includes(user.role);
     }
     
     // Role-based permissions
